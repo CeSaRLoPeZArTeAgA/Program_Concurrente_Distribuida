@@ -1,4 +1,4 @@
-package ejemplo;
+package ejemplo01;
 import java.math.BigInteger;
 public class SumaTodosBigInt {
 

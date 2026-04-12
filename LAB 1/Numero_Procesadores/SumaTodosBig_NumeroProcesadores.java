@@ -3,16 +3,14 @@ import java.math.BigInteger;
 import java.io.PrintWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-//import java.io.IOException;
 
-
-public class SumaTodosBigInt3 {
+public class SumaTodosBig_NumeroProcesadores {
 
     public BigInteger sum[];
 
     public static void main(String args[]) throws FileNotFoundException {
 
-        SumaTodosBigInt3 obj = new SumaTodosBigInt3();
+        SumaTodosBig_NumeroProcesadores obj = new SumaTodosBig_NumeroProcesadores();
 
         int N = 1000000000;
         int repeticiones = 3;
