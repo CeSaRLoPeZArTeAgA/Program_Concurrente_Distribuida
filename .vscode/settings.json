@@ -1,6 +1,10 @@
 {
     "java.project.sourcePaths": [
+        "SEMANA 3/redesOk",
+        "SEMANA 3/game",
         "SEMANA 1",
-        "LAB 1/Numero_Procesadores"
+        "LAB 1/Numero_Procesadores",
+        "LAB 1/Backpropagation/Codigo",
+        "LAB 1/Backpropagation"
     ]
 }

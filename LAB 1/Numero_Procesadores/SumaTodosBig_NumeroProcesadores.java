@@ -1,4 +1,4 @@
-package ejemplo01;
+//ackage ejemplo01;
 import java.math.BigInteger;
 import java.io.PrintWriter;
 import java.io.File;
@@ -15,11 +15,19 @@ public class SumaTodosBig_NumeroProcesadores {
         int N = 1000000000;
         int repeticiones = 3;
 
-        PrintWriter writer = new PrintWriter(new File("resultados.csv"));
+        // Muestra el directorio desde donde se está ejecutando el programa
+        String directorioActual = System.getProperty("user.dir");
+        System.out.println("Directorio actual: " + directorioActual);
+
+        // Crea el archivo resultados.csv en ese directorio
+        File archivo = new File(directorioActual, "resultados.csv");
+        PrintWriter writer = new PrintWriter(archivo);
+
+        //PrintWriter writer = new PrintWriter(new File("resultados.csv"));
         // Cabecera CSV
         writer.println("H,Tiempo");
 
-        for (int H = 1; H <= 20; H++) {
+        for (int H = 1; H <= 10; H++) {
 
             // -------------------------
             // Warm-up (no se mide)
