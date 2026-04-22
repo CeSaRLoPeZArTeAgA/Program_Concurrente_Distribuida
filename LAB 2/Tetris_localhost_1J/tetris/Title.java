@@ -36,9 +36,6 @@ public class Title extends JPanel implements KeyListener {
 		});
 		timer.start();
 		this.window = window;
-		
-		
-		
 	}
 	
 	public void paintComponent(Graphics g){
@@ -53,7 +50,7 @@ public class Title extends JPanel implements KeyListener {
 				30 - instructions.getHeight()/2 + 150, null);
 		
                 g.setColor(Color.WHITE);
-		g.drawString("Press space to play!", 150, WindowGame.HEIGHT / 2 + 100);
+		g.drawString("Presiones space para iniciar juego!", 150, WindowGame.HEIGHT / 2 + 100);
 		
 		
 	}	

@@ -20,21 +20,26 @@ import javax.swing.Timer;
 public class Board extends JPanel implements KeyListener, MouseListener, MouseMotionListener {
 
 	//Assets
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
     private BufferedImage pause, refresh;
 
 	//board dimensions (the playing area)
-    private final int boardHeight = 20, boardWidth = 10;
+    //private final int boardHeight = 20, boardWidth = 10;
 
 	// block size
-    public static final int blockSize = 30;
+    public static int blockSize = 30;
 
 	// field
-    private Color[][] board = new Color[boardHeight][boardWidth];
+    //private Color[][] board = new Color[boardHeight][boardWidth];
+
+    private final int boardHeight;//alto
+    private final int boardWidth;//ancho
+
+    //public static final int blockSize = 30;
+
+    private Color[][] board;
+
 
 	// array with all the possible shapes
     private Shape[] shapes = new Shape[7];
@@ -75,7 +80,11 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 	// score
     private int score = 0;
 
-    public Board() {
+    public Board(int boardHeight, int boardWidth) {
+
+        this.boardHeight = boardHeight;
+        this.boardWidth = boardWidth;
+        this.board = new Color[boardHeight][boardWidth];
 
         pause = ImageLoader.loadImage("/pause.png");
         refresh = ImageLoader.loadImage("/refresh.png");
@@ -83,11 +92,23 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
         mouseX = 0;
         mouseY = 0;
 
-        stopBounds = new Rectangle(350, 500, pause.getWidth(), pause.getHeight() + pause.getHeight() / 2);
-        refreshBounds = new Rectangle(350, 500 - refresh.getHeight() - 20, refresh.getWidth(),
-                refresh.getHeight() + refresh.getHeight() / 2);
+        int buttonX = boardWidth * blockSize + 50;
+        int pauseY = boardHeight * blockSize - 100;
 
-		// create game looper
+        stopBounds = new Rectangle(
+                buttonX,
+                pauseY,
+                pause.getWidth(),
+                pause.getHeight() + pause.getHeight() / 2
+        );
+
+        refreshBounds = new Rectangle(
+                buttonX,
+                pauseY - refresh.getHeight() - 20,
+                refresh.getWidth(),
+                refresh.getHeight() + refresh.getHeight() / 2
+        );
+
         looper = new Timer(delay, new GameLooper());
 
 		// create shapes
@@ -160,7 +181,9 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
         for (int row = 0; row < nextShape.getCoords().length; row++) {
             for (int col = 0; col < nextShape.getCoords()[0].length; col++) {
                 if (nextShape.getCoords()[row][col] != 0) {
-                    g.fillRect(col * 30 + 320, row * 30 + 50, Board.blockSize, Board.blockSize);
+                    int previewX = boardWidth * blockSize + 20;
+                    g.fillRect(col * blockSize + previewX, row * blockSize + 50, Board.blockSize, Board.blockSize);
+                    //g.fillRect(col * 30 + 320, row * 30 + 50, Board.blockSize, Board.blockSize);
                 }
             }
         }
@@ -195,8 +218,13 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 
         g.setFont(new Font("Georgia", Font.BOLD, 20));
 
-        g.drawString("SCORE", WindowGame.WIDTH - 125, WindowGame.HEIGHT / 2);
-        g.drawString(score + "", WindowGame.WIDTH - 125, WindowGame.HEIGHT / 2 + 30);
+        int scoreX = boardWidth * blockSize + 20;
+
+        g.drawString("SCORE", scoreX, WindowGame.HEIGHT / 2);
+        g.drawString(score + "", scoreX, WindowGame.HEIGHT / 2 + 30);
+        
+        //g.drawString("SCORE", WindowGame.WIDTH - 125, WindowGame.HEIGHT / 2);
+        //g.drawString(score + "", WindowGame.WIDTH - 125, WindowGame.HEIGHT / 2 + 30);
 
         g.setColor(Color.WHITE);
 
@@ -204,7 +232,8 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
             g.drawLine(0, i * blockSize, boardWidth * blockSize, i * blockSize);
         }
         for (int j = 0; j <= boardWidth; j++) {
-            g.drawLine(j * blockSize, 0, j * blockSize, boardHeight * 30);
+            //g.drawLine(j * blockSize, 0, j * blockSize, boardHeight * 30);
+            g.drawLine(j * blockSize, 0, j * blockSize, boardHeight * blockSize);
         }
     }
 
@@ -336,5 +365,14 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
     public void addScore() {
         score++;
     }
+
+    public int getBoardHeight() {
+    return boardHeight;
+    }
+
+    public int getBoardWidth() {
+        return boardWidth;
+    }
+
 
 }

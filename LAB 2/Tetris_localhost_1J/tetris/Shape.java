@@ -32,7 +32,8 @@ public class Shape {
         this.board = board;
         this.color = color;
         deltaX = 0;
-        x = 4;
+        //x = 4;
+        x = Math.max(0, (board.getBoardWidth() - coords[0].length) / 2);
         y = 0;
         delay = normal;
         time = 0;
@@ -66,8 +67,8 @@ public class Shape {
         }
 
         // check moving horizontal
-        if (!(x + deltaX + coords[0].length > 10) && !(x + deltaX < 0)) {
-
+        //if (!(x + deltaX + coords[0].length > 10) && !(x + deltaX < 0)) {
+        if (!(x + deltaX + coords[0].length > board.getBoardWidth()) && !(x + deltaX < 0)) {
             for (int row = 0; row < coords.length; row++) {
                 for (int col = 0; col < coords[row].length; col++) {
                     if (coords[row][col] != 0) {
@@ -87,7 +88,8 @@ public class Shape {
 
         // Check position + height(number of row) of shape
         if (timePassedFromCollision == -1) {
-            if (!(y + 1 + coords.length > 20)) {
+            if (!(y + 1 + coords.length > board.getBoardHeight())) {
+            //if (!(y + 1 + coords.length > 20)) {
 
                 for (int row = 0; row < coords.length; row++) {
                     for (int col = 0; col < coords[row].length; col++) {
@@ -124,7 +126,13 @@ public class Shape {
         for (int row = 0; row < coords.length; row++) {
             for (int col = 0; col < coords[0].length; col++) {
                 if (coords[row][col] != 0) {
-                    g.fillRect(col * 30 + x * 30, row * 30 + y * 30, Board.blockSize, Board.blockSize);
+                    //g.fillRect(col * 30 + x * 30, row * 30 + y * 30, Board.blockSize, Board.blockSize);
+                   g.fillRect(
+                                (col + x) * Board.blockSize,
+                                (row + y) * Board.blockSize,
+                                Board.blockSize,
+                                Board.blockSize
+                            );
                 }
             }
         }
@@ -167,7 +175,8 @@ public class Shape {
 
         rotatedShape = reverseRows(rotatedShape);
 
-        if ((x + rotatedShape[0].length > 10) || (y + rotatedShape.length > 20)) {
+        if ((x + rotatedShape[0].length > board.getBoardWidth()) || (y + rotatedShape.length > board.getBoardHeight())) {
+        //if ((x + rotatedShape[0].length > 10) || (y + rotatedShape.length > 20)) {
             return;
         }
 
