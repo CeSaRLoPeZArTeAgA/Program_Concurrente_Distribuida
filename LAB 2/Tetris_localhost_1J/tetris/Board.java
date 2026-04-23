@@ -24,24 +24,16 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 
     private BufferedImage pause, refresh;
 
-	//board dimensions (the playing area)
-    //private final int boardHeight = 20, boardWidth = 10;
-
-	// block size
+	// tamañano de bloque
     public static int blockSize = 30;
-
-	// field
-    //private Color[][] board = new Color[boardHeight][boardWidth];
 
     private final int boardHeight;//alto
     private final int boardWidth;//ancho
 
-    //public static final int blockSize = 30;
-
+    //contenedor de los colores
     private Color[][] board;
 
-
-	// array with all the possible shapes
+	// matriz con todas la posibles formas de tetris
     private Shape[] shapes = new Shape[7];
 
 	// currentShape
@@ -64,7 +56,8 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
     private boolean gamePaused = false;
 
     private boolean gameOver = false;
-    
+
+    //abanico de colores a usar en cada pieza al azar
     private Color[] colors = {Color.decode("#ed1c24"), Color.decode("#ff7f27"), Color.decode("#fff200"), 
         Color.decode("#22b14c"), Color.decode("#00a2e8"), Color.decode("#a349a4"), Color.decode("#3f48cc")};
     private Random random = new Random();
@@ -77,7 +70,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
         }
     });
 
-	// score
+	// manejo de puntuacion
     private int score = 0;
 
     public Board(int boardHeight, int boardWidth) {
@@ -111,37 +104,37 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
 
         looper = new Timer(delay, new GameLooper());
 
-		// create shapes
+		// creacion de formas en tetris
         shapes[0] = new Shape(new int[][]{
-            {1, 1} // I shape;
+            {1, 1} // linea de 2 bloques
         }, this, colors[0]);
 
         shapes[1] = new Shape(new int[][]{
             {1, 1, 1},
-            {0, 1, 0}, // T 
+            {0, 1, 0}, // bloque t
         }, this, colors[1]);
 
         shapes[2] = new Shape(new int[][]{
             {1, 1},
-            {1, 0}, // L 
+            {1, 0}, // bloque L pequeña izquierda
         }, this, colors[2]);
 
         shapes[3] = new Shape(new int[][]{
             { 1, 1},
-            { 0, 1}, // J 
+            { 0, 1}, // bloque L pequeña derecha
         }, this, colors[3]);
 
         shapes[4] = new Shape(new int[][]{
-            {1}, // .
+            {1}, // bloque punto 1x1
         }, this, colors[4]);
 
         shapes[5] = new Shape(new int[][]{
-            {1, 1, 1},
+            {1, 1, 1},// bloque linea de tres bloques
         }, this, colors[5]);
 
         shapes[6] = new Shape(new int[][]{
             {1, 1},
-            {1, 1}, // O shape;
+            {1, 1}, // bloque macizo de 2x2
         }, this, colors[6]);
     }
 
@@ -183,7 +176,6 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
                 if (nextShape.getCoords()[row][col] != 0) {
                     int previewX = boardWidth * blockSize + 20;
                     g.fillRect(col * blockSize + previewX, row * blockSize + 50, Board.blockSize, Board.blockSize);
-                    //g.fillRect(col * 30 + 320, row * 30 + 50, Board.blockSize, Board.blockSize);
                 }
             }
         }
@@ -203,36 +195,32 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
         }
 
         if (gamePaused) {
-            String gamePausedString = "GAME PAUSED";
+            String gamePausedString = "JUEGO PAUSADO";
             g.setColor(Color.WHITE);
-            g.setFont(new Font("Georgia", Font.BOLD, 30));
+            g.setFont(new Font("Georgia", Font.BOLD, 20));
             g.drawString(gamePausedString, 35, WindowGame.HEIGHT / 2);
         }
         if (gameOver) {
-            String gameOverString = "GAME OVER";
+            String gameOverString = "JUEGO TERMINADO";
             g.setColor(Color.WHITE);
-            g.setFont(new Font("Georgia", Font.BOLD, 30));
+            g.setFont(new Font("Georgia", Font.BOLD, 20));
             g.drawString(gameOverString, 50, WindowGame.HEIGHT / 2);
         }
         g.setColor(Color.WHITE);
 
-        g.setFont(new Font("Georgia", Font.BOLD, 20));
+        g.setFont(new Font("Georgia", Font.BOLD, 15));
 
         int scoreX = boardWidth * blockSize + 20;
 
-        g.drawString("SCORE", scoreX, WindowGame.HEIGHT / 2);
+        g.drawString("SCORE J1: ", scoreX, WindowGame.HEIGHT / 2);
         g.drawString(score + "", scoreX, WindowGame.HEIGHT / 2 + 30);
         
-        //g.drawString("SCORE", WindowGame.WIDTH - 125, WindowGame.HEIGHT / 2);
-        //g.drawString(score + "", WindowGame.WIDTH - 125, WindowGame.HEIGHT / 2 + 30);
-
         g.setColor(Color.WHITE);
 
         for (int i = 0; i <= boardHeight; i++) {
             g.drawLine(0, i * blockSize, boardWidth * blockSize, i * blockSize);
         }
         for (int j = 0; j <= boardWidth; j++) {
-            //g.drawLine(j * blockSize, 0, j * blockSize, boardHeight * 30);
             g.drawLine(j * blockSize, 0, j * blockSize, boardHeight * blockSize);
         }
     }

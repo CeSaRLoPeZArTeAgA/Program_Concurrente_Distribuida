@@ -6,9 +6,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 public class WindowGame {
-    //public static final int WIDTH = 445, HEIGHT = 629;
-    public static int WIDTH = 445;
-    public static int HEIGHT = 629;
+    
+    public static int WIDTH = 445;//ancho
+    public static int HEIGHT = 629;//alto
  
     private Board board;
     private Title title;
@@ -39,7 +39,7 @@ public class WindowGame {
         WIDTH = columnas * Board.blockSize + 145;
         HEIGHT = filas * Board.blockSize + 29;
 
-        window = new JFrame("Tetris - CLA");
+        window = new JFrame("Tetris CLA - rev1");
         window.setSize(WIDTH, HEIGHT);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLocationRelativeTo(null);

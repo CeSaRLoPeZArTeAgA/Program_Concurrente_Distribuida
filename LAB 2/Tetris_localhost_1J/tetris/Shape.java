@@ -67,7 +67,6 @@ public class Shape {
         }
 
         // check moving horizontal
-        //if (!(x + deltaX + coords[0].length > 10) && !(x + deltaX < 0)) {
         if (!(x + deltaX + coords[0].length > board.getBoardWidth()) && !(x + deltaX < 0)) {
             for (int row = 0; row < coords.length; row++) {
                 for (int col = 0; col < coords[row].length; col++) {
@@ -89,8 +88,7 @@ public class Shape {
         // Check position + height(number of row) of shape
         if (timePassedFromCollision == -1) {
             if (!(y + 1 + coords.length > board.getBoardHeight())) {
-            //if (!(y + 1 + coords.length > 20)) {
-
+            
                 for (int row = 0; row < coords.length; row++) {
                     for (int col = 0; col < coords[row].length; col++) {
                         if (coords[row][col] != 0) {
@@ -126,7 +124,6 @@ public class Shape {
         for (int row = 0; row < coords.length; row++) {
             for (int col = 0; col < coords[0].length; col++) {
                 if (coords[row][col] != 0) {
-                    //g.fillRect(col * 30 + x * 30, row * 30 + y * 30, Board.blockSize, Board.blockSize);
                    g.fillRect(
                                 (col + x) * Board.blockSize,
                                 (row + y) * Board.blockSize,
@@ -136,17 +133,6 @@ public class Shape {
                 }
             }
         }
-
-//        for (int row = 0; row < reference.length; row++) {
-//            for (int col = 0; col < reference[0].length; col++) {
-//                if (reference[row][col] != 0) {
-//                    g.fillRect(col * 30 + 320, row * 30 + 160, Board.blockSize, Board.blockSize);
-//                }
-//
-//            }
-//
-//        }
-
     }
 
     private void checkLine() {
@@ -176,7 +162,6 @@ public class Shape {
         rotatedShape = reverseRows(rotatedShape);
 
         if ((x + rotatedShape[0].length > board.getBoardWidth()) || (y + rotatedShape.length > board.getBoardHeight())) {
-        //if ((x + rotatedShape[0].length > 10) || (y + rotatedShape.length > 20)) {
             return;
         }
 
