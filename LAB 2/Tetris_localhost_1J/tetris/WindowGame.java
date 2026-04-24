@@ -45,6 +45,7 @@ public class WindowGame {
         window.setLocationRelativeTo(null);
         window.setResizable(false);
 
+        //creacion del tablero y titulo
         board = new Board(filas, columnas);
         title = new Title(this);
 
@@ -89,6 +90,7 @@ public class WindowGame {
         }
     }
 
+    //aqui empieza el juego tetris
     public void startTetris() {
         window.remove(title);
         window.addMouseMotionListener(board);

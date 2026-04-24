@@ -17,6 +17,25 @@ import java.util.Random;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+//esta clase se encarga de:
+//- dibujar el tablero de juego
+//- dibujar las piezas en el tablero
+//- manejar la logica de colisiones 
+//- manejar la logica de puntuacion
+//- manejar los eventos de teclado y mouse
+//- manejar el loop del juego
+//- manejar el estado del juego (pausado, terminado)
+//- manejar el cambio de piezas
+//- manejar los botones de pausa y reinicio
+//- manejar la pantalla de previsualizacion de la siguiente pieza
+//- manejar el cambio de velocidad de las piezas
+//- manejar el cambio de rotacion de las piezas
+//- manejar el cambio de posicion de las piezas
+//- manejar el cambio de color de las piezas
+//- manejar el cambio de tamaño de las piezas
+//- manejar el cambio de forma de las piezas
+//- manejar el cambio de tipo de las piezas
+
 public class Board extends JPanel implements KeyListener, MouseListener, MouseMotionListener {
 
 	//Assets
@@ -30,7 +49,7 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
     private final int boardHeight;//alto
     private final int boardWidth;//ancho
 
-    //contenedor de los colores
+    //contenedor del tablero, cada posicion puede ser null o un color dependiendo si hay una pieza o no
     private Color[][] board;
 
 	// matriz con todas la posibles formas de tetris
@@ -251,22 +270,32 @@ public class Board extends JPanel implements KeyListener, MouseListener, MouseMo
         return board;
     }
 
+    //control de movimiento de piezas
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            currentShape.rotateShape();
+        //rotacion antihorario
+        if (e.getKeyCode() == KeyEvent.VK_A) {
+            currentShape.rotateShapeCounterClockwise();
         }
+        //rotacion horario
+        if (e.getKeyCode() == KeyEvent.VK_S) {
+            currentShape.rotateShapeClockwise();
+        }
+        //movimiento horizontal derecha
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             currentShape.setDeltaX(1);
         }
+        //movimiento horizontal izquierda
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             currentShape.setDeltaX(-1);
         }
+        //movimiento vertical hacia abajo acelerado
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             currentShape.speedUp();
         }
     }
 
+    //
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {

@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+//representa la pantalla de inicio del juego, con instrucciones y un boton para iniciar el juego
 public class Title extends JPanel implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
@@ -25,6 +26,7 @@ public class Title extends JPanel implements KeyListener {
 	
 	
 	public Title(WindowGame window){
+				//carga la imagen de instrucciones y un mensaje para iniciar el juego
                 instructions = ImageLoader.loadImage("/arrow.png");
 		timer = new Timer(1000/60, new ActionListener(){
 
@@ -45,16 +47,18 @@ public class Title extends JPanel implements KeyListener {
 		
 		g.fillRect(0, 0, WindowGame.WIDTH, WindowGame.HEIGHT);
 		
-		
+		//dibuja la imagen de instrucciones en la pantalla
 		g.drawImage(instructions, WindowGame.WIDTH/2 - instructions.getWidth()/2,
 				30 - instructions.getHeight()/2 + 150, null);
 		
                 g.setColor(Color.WHITE);
-		g.drawString("Presiones space para iniciar juego!", 150, WindowGame.HEIGHT / 2 + 100);
+		//dibuja en la pantalla un mensaje para iniciar el juego
+		g.drawString("Presione space para iniciar juego!", 150, WindowGame.HEIGHT / 2 + 100);
 		
 		
 	}	
 
+	//captura el evento de presionar la tecla espacio para iniciar el juego
     @Override
     public void keyTyped(KeyEvent e) {
         if(e.getKeyChar() == KeyEvent.VK_SPACE) {

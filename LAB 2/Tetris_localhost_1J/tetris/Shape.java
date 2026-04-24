@@ -27,12 +27,12 @@ public class Shape {
 
     private int timePassedFromCollision = -1;
 
+    //repressenta una pieza individual del juego, con su forma, color y posicion en el tablero
     public Shape(int[][] coords, Board board, Color color) {
         this.coords = coords;
         this.board = board;
         this.color = color;
         deltaX = 0;
-        //x = 4;
         x = Math.max(0, (board.getBoardWidth() - coords[0].length) / 2);
         y = 0;
         delay = normal;
@@ -153,7 +153,8 @@ public class Shape {
         }
     }
 
-    public void rotateShape() {
+    //funcion que rotacion anti-horaria de las piezas
+    public void rotateShapeCounterClockwise() {
 
         int[][] rotatedShape = null;
 
@@ -177,6 +178,34 @@ public class Shape {
         coords = rotatedShape;
     }
 
+    //funcion que rotacion horaria de las piezas
+    public void rotateShapeClockwise() {
+
+        int[][] rotatedShape = null;
+
+        rotatedShape = transposeMatrix(coords);
+
+        rotatedShape = reverseColumns(rotatedShape);
+
+        if ((x + rotatedShape[0].length > board.getBoardWidth()) || 
+            (y + rotatedShape.length > board.getBoardHeight())) {
+            return;
+        }
+
+        for (int row = 0; row < rotatedShape.length; row++) {
+            for (int col = 0; col < rotatedShape[row].length; col++) {
+                if (rotatedShape[row][col] != 0) {
+                    if (board.getBoard()[y + row][x + col] != null) {
+                        return;
+                    }
+                }
+            }
+        }
+
+        coords = rotatedShape;
+    }
+
+
     private int[][] transposeMatrix(int[][] matrix) {
         int[][] temp = new int[matrix[0].length][matrix.length];
         for (int i = 0; i < matrix.length; i++) {
@@ -185,6 +214,26 @@ public class Shape {
             }
         }
         return temp;
+    }
+
+    //funcion que invierte las columnas de la matriz, para rotacion horaria
+    private int[][] reverseColumns(int[][] matrix) {
+
+        for (int row = 0; row < matrix.length; row++) {
+            int left = 0;
+            int right = matrix[row].length - 1;
+
+            while (left < right) {
+                int temp = matrix[row][left];
+                matrix[row][left] = matrix[row][right];
+                matrix[row][right] = temp;
+
+                left++;
+                right--;
+            }
+        }
+
+        return matrix;
     }
 
     private int[][] reverseRows(int[][] matrix) {
