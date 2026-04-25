@@ -1,0 +1,21 @@
+Para ejecutar como cliente:
+
+1) Instala Java JDK/JRE en la computadora cliente.
+2) Abre terminal en esta carpeta.
+3) Ejecuta:
+
+   java -cp out Cliente_Tetris.Cliente50
+
+4) Cuando pida IP, escribe la IP de la computadora servidor.
+   Ejemplo: 192.168.1.35
+
+No usar 127.0.0.1 si el servidor esta en otra computadora.
+
+Si quieres recompilar el cliente:
+
+   javac -d out *.java
+
+------------------------------------------------------------
+
+Entrar con la shell donde esta el archivo Cliente50.java y compilar con:
+   java Cliente50.java

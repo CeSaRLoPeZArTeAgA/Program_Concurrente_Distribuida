@@ -1,0 +1,11 @@
+
+Compilar desde la carpeta TetrisMixMultiplayer:
+  javac -d out Servidor_Tetris/*.java
+
+Ejecutar servidor:
+  java -cp out Servidor_Tetris.Servidor50
+
+---------------------------------------------------------------
+
+Desde la shell, se entra directamente donde se ejecutara el servidor:
+  java Servidor50.java
