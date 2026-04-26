@@ -1,0 +1,14 @@
+Compilar desde la carpeta que contiene la carpeta tetris:
+  javac -d out tetris/*.java
+
+Ejecutar servidor indicando puerto por parámetro:
+  java -cp out tetris.Servidor50 5000
+
+También se puede ejecutar sin parámetro; el programa pedirá el puerto por teclado:
+  java -cp out tetris.Servidor50
+
+Ejemplo de entrada interactiva:
+  Ingrese puerto del servidor: [4444] 5000
+  Ingrese número de jugadores: [2]
+  Ingrese filas del tablero: [20]
+  Ingrese columnas del tablero: [10]
