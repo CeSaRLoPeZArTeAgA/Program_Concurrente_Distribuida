@@ -1,0 +1,29 @@
+Para ejecutar como cliente:
+
+1) Instala Java JDK/JRE en la computadora cliente.
+2) Abre una terminal en la carpeta que contiene la carpeta tetris.
+3) Compila:
+
+   javac -d out tetris/*.java
+
+4) Ejecuta:
+
+   java -cp out tetris.Cliente50
+
+5) El programa pedira:
+
+   - IP del servidor
+   - Puerto del servidor
+   - Nombre del jugador
+
+Ejemplo:
+
+   IP del servidor: 192.168.1.35
+   Puerto del servidor: 5000
+   Nombre del jugador: Cesar
+
+IMPORTANTE:
+
+- No uses 127.0.0.1 si el servidor esta en otra computadora.
+- El puerto del cliente debe ser el mismo puerto con el que ejecutaste el servidor.
+- Si el servidor esta en el puerto 5000, el cliente tambien debe conectarse al puerto 5000.
