@@ -1,4 +1,4 @@
-package sumaNredBase;
+package redesOk;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,7 +15,7 @@ public class TCPClient50 {
 
     private String servermsj;
     public  String SERVERIP;
-    public static final int SERVERPORT = 4444;
+    public static final int SERVERPORT = 8189;
     private OnMessageReceived mMessageListener = null;
     private boolean mRun = false;
 

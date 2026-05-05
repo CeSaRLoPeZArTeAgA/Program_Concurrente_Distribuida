@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 public class Cliente50 {
     public static void main(String[] args) {
-        String ip = pedirTexto("IP del servidor:", "127.0.0.1");
+        String ip = pedirTexto("IP del servidor:", "192.168.1.119");
         int port = pedirPuerto("Puerto del servidor:", TCPClient50.DEFAULT_SERVER_PORT);
         String name = pedirTexto("Nombre del jugador:", "Jugador");
 

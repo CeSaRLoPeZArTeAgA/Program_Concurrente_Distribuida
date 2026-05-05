@@ -21,6 +21,7 @@ public class Servidor50 {
         expectedPlayers = pedirEntero(sc, "Ingrese número de jugadores:", 2, 1, 9);
         int rows = pedirEntero(sc, "Ingrese filas del tablero:", 20, 10, 40);
         int cols = pedirEntero(sc, "Ingrese columnas del tablero:", 10, 6, 30);
+        int port = pedirEntero(sc, "Ingrese puerto del servidor:", 4444, 1024, 65535);
 
         game = new TetrisGameEngine(rows, cols);
 

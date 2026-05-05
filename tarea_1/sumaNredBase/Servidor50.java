@@ -46,7 +46,7 @@ public class Servidor50 {
     int rptacli[] = new int[20];
     int sumclient = 0;
 
-    void ServidorRecibe(String llego) {
+    synchronized void ServidorRecibe(String llego) {
         System.out.println("SERVIDOR40 El mensaje:" + llego);
         if (llego != null && !llego.equals("")) {
             if (llego.trim().contains("rpta")) {
@@ -68,10 +68,13 @@ public class Servidor50 {
                         System.out.println("LA RESPUESTA TOTAL ES:" + sumclient);
                         contarcliente = 0;
                         sumclient = 0;
+                        
                         for (int i = 0; i < contarcliente; i++) {
                             rptacli[i] = 0;
                         }
-
+                        
+                        contarcliente = 0;
+                        sumclient = 0;
                     }
                 }
             }

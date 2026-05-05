@@ -1,0 +1,18 @@
+
+mkdir out
+Compilar desde la carpeta que contiene la carpeta tetris:
+  javac -d out MNIST/* .java
+
+  java -cp out MNIST.MainProbarMuestraHilos
+
+Ejecutar servidor indicando puerto por parámetro:
+  java -cp out tetris.Servidor50 5000
+
+También se puede ejecutar sin parámetro; el programa pedirá el puerto por teclado:
+  java -cp out tetris.Servidor50
+
+
+$files = Get-ChildItem -Recurse -Filter *.java | ForEach-Object { $_.FullName }
+javac -encoding UTF-8 -d out $files
+
+java -cp out MNIST.MainProbarMuestraHilos    

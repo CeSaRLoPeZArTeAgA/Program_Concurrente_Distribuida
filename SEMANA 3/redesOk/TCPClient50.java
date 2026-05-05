@@ -15,7 +15,7 @@ public class TCPClient50 {
 
     private String servermsj;
     public  String SERVERIP;
-    public static final int SERVERPORT = 4444;
+    public static final int SERVERPORT = 5123;
     private OnMessageReceived mMessageListener = null;
     private boolean mRun = false;
 

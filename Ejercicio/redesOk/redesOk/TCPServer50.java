@@ -1,51 +1,34 @@
-package sumaNredBase;
-
+package redesOk;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
 public class TCPServer50 {
     private String message;
-    
     int nrcli = 0;
-
-    public static final int SERVERPORT = 4444;
+    public static final int SERVERPORT = 5123;
     private OnMessageReceived messageListener = null;
     private boolean running = false;
     TCPServerThread50[] sendclis = new TCPServerThread50[10];
-
     PrintWriter mOut;
     BufferedReader in;
-    
     ServerSocket serverSocket;
-
     //el constructor pide una interface OnMessageReceived
     public TCPServer50(OnMessageReceived messageListener) {
         this.messageListener = messageListener;
     }
-    
-    public OnMessageReceived getMessageListener(){/////¨
+    public OnMessageReceived getMessageListener(){
         return this.messageListener;
     }
-    
     public void sendMessageTCPServer(String message){
         for (int i = 1; i <= nrcli; i++) {
             sendclis[i].sendMessage(message);
             System.out.println("ENVIANDO A JUGADOR " + (i));
         }
     }
-    public void sendMessageTCPServerRango(String message, int Rango){    
-        int d = (int) ((Rango) / nrcli);
-        for (int i = 1; i < nrcli; i++) {
-            sendclis[i].sendMessage("evalua " + ((i-1) * d + 1) + " " + ((i-1) * d + d));
-            System.out.println("ENVIANDO A JUGADOR " + (i));
-        }
-        sendclis[nrcli].sendMessage("evalua " + ((d * (nrcli - 1))+1) + " " + (Rango));
-        System.out.println("ENVIANDO A JUGADOR " + (nrcli));
-    }    
+    
     public void run(){
         running = true;
         try{
@@ -74,7 +57,7 @@ public class TCPServer50 {
         return sendclis;
     } 
 
-    public  interface OnMessageReceived {
+    public interface OnMessageReceived {
         public void messageReceived(String message);
     }
 }

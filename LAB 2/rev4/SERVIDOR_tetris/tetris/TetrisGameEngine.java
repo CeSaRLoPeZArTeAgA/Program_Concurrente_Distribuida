@@ -5,10 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Motor autoritativo del juego.
- * Solo el servidor debe modificar este estado.
- */
+
 public class TetrisGameEngine {
     private final int rows;
     private final int cols;

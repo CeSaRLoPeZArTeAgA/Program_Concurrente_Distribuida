@@ -1,5 +1,9 @@
 package redesOk;
 
+
+
+
+
 import java.util.Scanner;
 import redesOk.TCPClient50;
 
@@ -16,7 +20,7 @@ class Cliente50{
 
                 @Override
                 public void run() {
-                    mTcpClient = new TCPClient50("10.10.0.229",
+                    mTcpClient = new TCPClient50("10.10.0.242",
                         new TCPClient50.OnMessageReceived(){
                             @Override
                             public void messageReceived(String message){
@@ -41,17 +45,7 @@ class Cliente50{
     
     }
     void ClienteRecibe(String llego){
-        System.out.println("CLIENTE50, msj input for servidor: " + llego);
-
-        // TAREA: DESDE EL SERVIDOR DE ENVIA EL COMANDO "envia NUM", EL CLIENTE IDENTIFICA
-        // LA CABEZERA DEL COMANDO Y INICIA LA ORDEN 66 Y EL COMANDO DE ACTICACION
-        if(llego.matches("^envia \\d+$")){
-            int numero=Integer.parseInt(llego.substring(6).trim());
-            String respuesta="ORDEN 66: "+(numero)+"_Comand_CLA";
-            if (mTcpClient!=null) {
-                mTcpClient.sendMessage(respuesta);
-            }
-        }
+        System.out.println("CLINTE50 El mensaje::" + llego);
 
     }
     void ClienteEnvia(String envia){
