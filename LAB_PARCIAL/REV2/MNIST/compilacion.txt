@@ -1,0 +1,25 @@
+ir a la carpeta MNIST:
+cd D:\Concurrente_Proyecto\REV2\MNIST
+
+Compilar desde la carpeta:
+javac -encoding UTF-8 -d out *.java 
+
+--------------------------------------------------------------------
+COMPILACION MNIST - ENTRENAMIENTO
+
+compilar el entramiento de modelo, solo unica vez, quedando modelo_mnist.bin
+java -cp out MNIST.MainEntrenarGuardar
+
+---------------------------------------------------------------------
+
+COMPILACION WORD2VEC - ENTRENAMIENTO
+
+compilar el entramiento de modelo, solo unica vez, quedando word2vec_model.bin
+java -cp out MNIST.MainEntrenarWord2Vec
+
+-----------------------------------------------------------
+
+COMPILACION DE MICRO CHUNCK
+
+compila el menu principal, el cual usara el modelo MNIST para imagene y WORD2VEC para analogias
+java -cp out MNIST.MainMenu   

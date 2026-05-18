@@ -1,0 +1,304 @@
+package generar.mnist;
+
+import java.util.Random;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class MLP {
+    private final int inputSize = 784;
+    private final int hidden1Size = 100;
+    private final int hidden2Size = 50;
+    private final int outputSize = 10;
+
+    private final double[][] W1 = new double[hidden1Size][inputSize];
+    private final double[] b1 = new double[hidden1Size];
+
+    private final double[][] W2 = new double[hidden2Size][hidden1Size];
+    private final double[] b2 = new double[hidden2Size];
+
+    private final double[][] W3 = new double[outputSize][hidden2Size];
+    private final double[] b3 = new double[outputSize];
+
+    private final Random rnd = new Random(42);
+
+    public MLP() {
+        initWeights(W1, inputSize);
+        initWeights(W2, hidden1Size);
+        initWeights(W3, hidden2Size);
+    }
+
+    private void initWeights(double[][] W, int fanIn) {
+        double scale = Math.sqrt(2.0 / fanIn); // He initialization aprox
+        for (int i = 0; i < W.length; i++) {
+            for (int j = 0; j < W[i].length; j++) {
+                W[i][j] = rnd.nextGaussian() * scale;
+            }
+        }
+    }
+
+    private double relu(double x) {
+        return Math.max(0.0, x);
+    }
+
+    private double reluPrime(double x) {
+        return x > 0.0 ? 1.0 : 0.0;
+    }
+
+    private double[] softmax(double[] z) {
+        double max = z[0];
+        for (int i = 1; i < z.length; i++) {
+            if (z[i] > max) max = z[i];
+        }
+
+        double sum = 0.0;
+        double[] exp = new double[z.length];
+        for (int i = 0; i < z.length; i++) {
+            exp[i] = Math.exp(z[i] - max);
+            sum += exp[i];
+        }
+
+        for (int i = 0; i < z.length; i++) {
+            exp[i] /= sum;
+        }
+        return exp;
+    }
+
+    private double[] matVec(double[][] W, double[] x, double[] b) {
+        double[] y = new double[W.length];
+        for (int i = 0; i < W.length; i++) {
+            double sum = b[i];
+            for (int j = 0; j < W[i].length; j++) {
+                sum += W[i][j] * x[j];
+            }
+            y[i] = sum;
+        }
+        return y;
+    }
+
+    private double[] applyReLU(double[] z) {
+        double[] a = new double[z.length];
+        for (int i = 0; i < z.length; i++) {
+            a[i] = relu(z[i]);
+        }
+        return a;
+    }
+
+    public int predict(double[] x) {
+        double[] z1 = matVec(W1, x, b1);
+        double[] a1 = applyReLU(z1);
+
+        double[] z2 = matVec(W2, a1, b2);
+        double[] a2 = applyReLU(z2);
+
+        double[] z3 = matVec(W3, a2, b3);
+        double[] yhat = softmax(z3);
+
+        int argmax = 0;
+        for (int i = 1; i < yhat.length; i++) {
+            if (yhat[i] > yhat[argmax]) {
+                argmax = i;
+            }
+        }
+        return argmax;
+    }
+
+    public double trainSample(double[] x, int label, double lr) {
+       
+        double[] z1 = matVec(W1, x, b1);
+        double[] a1 = applyReLU(z1);
+
+        double[] z2 = matVec(W2, a1, b2);
+        double[] a2 = applyReLU(z2);
+
+        double[] z3 = matVec(W3, a2, b3);
+        double[] yhat = softmax(z3);
+
+       
+        double[] y = new double[outputSize];
+        y[label] = 1.0;
+
+        double loss = -Math.log(yhat[label] + 1e-12);
+
+        double[] delta3 = new double[outputSize];
+        for (int i = 0; i < outputSize; i++) {
+            delta3[i] = yhat[i] - y[i];
+        }
+
+        double[] delta2 = new double[hidden2Size];
+        for (int i = 0; i < hidden2Size; i++) {
+            double sum = 0.0;
+            for (int k = 0; k < outputSize; k++) {
+                sum += W3[k][i] * delta3[k];
+            }
+            delta2[i] = sum * reluPrime(z2[i]);
+        }
+
+        double[] delta1 = new double[hidden1Size];
+        for (int i = 0; i < hidden1Size; i++) {
+            double sum = 0.0;
+            for (int k = 0; k < hidden2Size; k++) {
+                sum += W2[k][i] * delta2[k];
+            }
+            delta1[i] = sum * reluPrime(z1[i]);
+        }
+
+        for (int i = 0; i < outputSize; i++) {
+            for (int j = 0; j < hidden2Size; j++) {
+                W3[i][j] -= lr * delta3[i] * a2[j];
+            }
+            b3[i] -= lr * delta3[i];
+        }
+
+        // ---------- update W2, b2 ----------
+        for (int i = 0; i < hidden2Size; i++) {
+            for (int j = 0; j < hidden1Size; j++) {
+                W2[i][j] -= lr * delta2[i] * a1[j];
+            }
+            b2[i] -= lr * delta2[i];
+        }
+
+        // ---------- update W1, b1 ----------
+        for (int i = 0; i < hidden1Size; i++) {
+            for (int j = 0; j < inputSize; j++) {
+                W1[i][j] -= lr * delta1[i] * x[j];
+            }
+            b1[i] -= lr * delta1[i];
+        }
+
+        return loss;
+    }
+
+    public double accuracy(MNISTDataset dataset) {
+        int correct = 0;
+        for (int i = 0; i < dataset.getSize(); i++) {
+            double[] x = normalize(dataset.getImage(i));
+            int pred = predict(x);
+            if (pred == dataset.getLabel(i)) {
+                correct++;
+            }
+        }
+        return 100.0 * correct / dataset.getSize();
+    }
+
+    public static double[] normalize(int[] image) {
+        double[] x = new double[image.length];
+        for (int i = 0; i < image.length; i++) {
+            x[i] = image[i] / 255.0;
+        }
+        return x;
+    }
+
+    public double[] predictProbs(double[] x) {
+        double[] z1 = matVec(W1, x, b1);
+        double[] a1 = applyReLU(z1);
+
+        double[] z2 = matVec(W2, a1, b2);
+        double[] a2 = applyReLU(z2);
+
+        double[] z3 = matVec(W3, a2, b3);
+        return softmax(z3);
+    }
+    
+    public void saveWeights(String path) throws IOException {
+    try (DataOutputStream out = new DataOutputStream(
+            new BufferedOutputStream(new FileOutputStream(path)))) {
+
+        out.writeUTF("MNIST_MLP_V1");
+
+        out.writeInt(inputSize);
+        out.writeInt(hidden1Size);
+        out.writeInt(hidden2Size);
+        out.writeInt(outputSize);
+
+        writeMatrix(out, W1);
+        writeVector(out, b1);
+
+        writeMatrix(out, W2);
+        writeVector(out, b2);
+
+        writeMatrix(out, W3);
+        writeVector(out, b3);
+    }
+}
+
+    public void loadWeights(String path) throws IOException {
+    try (DataInputStream in = new DataInputStream(
+            new BufferedInputStream(new FileInputStream(path)))) {
+
+        String magic = in.readUTF();
+
+        if (!"MNIST_MLP_V1".equals(magic)) {
+            throw new IOException("Archivo de pesos inválido o incompatible.");
+        }
+
+        int input = in.readInt();
+        int h1 = in.readInt();
+        int h2 = in.readInt();
+        int output = in.readInt();
+
+        if (input != inputSize || h1 != hidden1Size || h2 != hidden2Size || output != outputSize) {
+            throw new IOException("La arquitectura del archivo no coincide con la red actual.");
+        }
+
+        readMatrix(in, W1);
+        readVector(in, b1);
+
+        readMatrix(in, W2);
+        readVector(in, b2);
+
+        readMatrix(in, W3);
+        readVector(in, b3);
+        }   
+    }
+
+    private static void writeMatrix(DataOutputStream out, double[][] matrix) throws IOException {
+    out.writeInt(matrix.length);
+    out.writeInt(matrix[0].length);
+
+    for (int i = 0; i < matrix.length; i++) {
+        for (int j = 0; j < matrix[i].length; j++) {
+            out.writeDouble(matrix[i][j]);
+            }
+        }
+    }
+
+    private static void writeVector(DataOutputStream out, double[] vector) throws IOException {
+    out.writeInt(vector.length);
+
+    for (int i = 0; i < vector.length; i++) {
+        out.writeDouble(vector[i]);
+        }
+    }
+
+    private static void readMatrix(DataInputStream in, double[][] matrix) throws IOException {
+    int rows = in.readInt();
+    int cols = in.readInt();
+
+    if (rows != matrix.length || cols != matrix[0].length) {
+        throw new IOException("Dimensión de matriz incompatible.");
+    }
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            matrix[i][j] = in.readDouble();
+            }
+        }
+    }
+
+    private static void readVector(DataInputStream in, double[] vector) throws IOException {
+    int size = in.readInt();
+
+    if (size != vector.length) {
+        throw new IOException("Dimensión de vector incompatible.");
+        }
+
+    for (int i = 0; i < size; i++) {
+        vector[i] = in.readDouble();
+        }
+    }
+}

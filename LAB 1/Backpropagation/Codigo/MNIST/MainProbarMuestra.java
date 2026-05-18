@@ -5,11 +5,16 @@ import java.util.Random;
 public class MainProbarMuestra {
 
     public static void main(String[] args) {
-        String trainImages = "D:/CICLO 2026-1 UNI/Program_Concurrente_Distribuida/LAB 1/Backpropagation/Codigo/MNIST/train-images-idx3-ubyte.gz";
-        String trainLabels = "D:/CICLO 2026-1 UNI/Program_Concurrente_Distribuida/LAB 1/Backpropagation/Codigo/MNIST/train-labels-idx1-ubyte.gz";
+        //String trainImages = "D:/CICLO 2026-1 UNI/Program_Concurrente_Distribuida/LAB 1/Backpropagation/Codigo/MNIST/train-images-idx3-ubyte.gz";
+        //String trainLabels = "D:/CICLO 2026-1 UNI/Program_Concurrente_Distribuida/LAB 1/Backpropagation/Codigo/MNIST/train-labels-idx1-ubyte.gz";
 
-        String testImages = "D:/CICLO 2026-1 UNI/Program_Concurrente_Distribuida/LAB 1/Backpropagation/Codigo/MNIST/t10k-images-idx3-ubyte.gz";
-        String testLabels = "D:/CICLO 2026-1 UNI/Program_Concurrente_Distribuida/LAB 1/Backpropagation/Codigo/MNIST/t10k-labels-idx1-ubyte.gz";
+        //String testImages = "D:/CICLO 2026-1 UNI/Program_Concurrente_Distribuida/LAB 1/Backpropagation/Codigo/MNIST/t10k-images-idx3-ubyte.gz";
+        //String testLabels = "D:/CICLO 2026-1 UNI/Program_Concurrente_Distribuida/LAB 1/Backpropagation/Codigo/MNIST/t10k-labels-idx1-ubyte.gz";
+
+        String trainImages = "train-images-idx3-ubyte.gz";
+        String trainLabels = "train-labels-idx1-ubyte.gz";
+        String testImages = "t10k-images-idx3-ubyte.gz";
+        String testLabels = "t10k-labels-idx1-ubyte.gz";
 
         try {
             MNISTDataset train = MNISTLoader.load(trainImages, trainLabels, 60000);

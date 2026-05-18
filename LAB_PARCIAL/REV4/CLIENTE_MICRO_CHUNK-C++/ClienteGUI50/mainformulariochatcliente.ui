@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainFormularioChatCliente</class>
+ <widget class="QWidget" name="MainFormularioChatCliente">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>720</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>IA Cube - Chat</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0,0">
+   <property name="margin">
+    <number>12</number>
+   </property>
+   <property name="spacing">
+    <number>8</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QLabel" name="labelTitulo">
+       <property name="text"><string>Chat IA Cube</string></property>
+       <property name="font">
+        <font><pointsize>13</pointsize><bold>true</bold></font>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelConexion">
+       <property name="text"><string>○ Sin conexion</string></property>
+       <property name="alignment"><set>Qt::AlignRight|Qt::AlignVCenter</set></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="chatHistorial">
+     <property name="readOnly"><bool>true</bool></property>
+     <property name="lineWrapMode"><enum>QTextEdit::WidgetWidth</enum></property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QLabel" name="labelImagenPreview">
+       <property name="minimumSize"><size><width>64</width><height>64</height></size></property>
+       <property name="maximumSize"><size><width>64</width><height>64</height></size></property>
+       <property name="frameShape"><enum>QFrame::Box</enum></property>
+       <property name="alignment"><set>Qt::AlignCenter</set></property>
+       <property name="visible"><bool>false</bool></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelImagenNombre">
+       <property name="text"><string/></property>
+       <property name="visible"><bool>false</bool></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnQuitarImagen">
+       <property name="text"><string>✕</string></property>
+       <property name="maximumSize"><size><width>28</width><height>28</height></size></property>
+       <property name="visible"><bool>false</bool></property>
+      </widget>
+     </item>
+     <item>
+      <spacer><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="btnAdjuntar">
+       <property name="text"><string>📎 Adjuntar</string></property>
+       <property name="minimumWidth"><number>90</number></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="inputMensaje">
+       <property name="placeholderText">
+        <string>Texto, imagen adjunta, o analogia (A:B:C)...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnEnviar">
+       <property name="text"><string>Enviar</string></property>
+       <property name="minimumWidth"><number>80</number></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="btnLimpiar">
+       <property name="text"><string>Limpiar</string></property>
+      </widget>
+     </item>
+     <item>
+      <spacer><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnMenu">
+       <property name="text"><string>← Menu</string></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnSalir">
+       <property name="text"><string>Salir</string></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
