@@ -6,7 +6,12 @@ Ejecutar servidor indicando puerto por parámetro:
 
 También se puede ejecutar sin parámetro; el programa pedirá el puerto por teclado:
   java -cp out tetris.Servidor50
+------------------------------------------------------------------------
+Otra forma(sin compilar) de correr es estar en nivel del programa Servidor50 y desde la shell hacer:
 
+java Servidor50.java
+
+-----------------------------------------------------------------------
 Ejemplo de entrada interactiva:
   Ingrese puerto del servidor: [4444] 5000
   Ingrese número de jugadores: [2]

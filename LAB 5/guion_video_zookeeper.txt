@@ -1,0 +1,38 @@
+Guion del video explicativo: ZooKeeper
+Fuente: Hunt, Konar, Junqueira y Reed, ZooKeeper: Wait-free coordination for Internet-scale systems.
+
+01. ZooKeeper: coordinación wait-free
+En este video explicamos ZooKeeper, un servicio de coordinación para sistemas distribuidos a escala Internet. La idea central del paper es construir un núcleo pequeño, eficiente y tolerante a fallos, sobre el cual los clientes puedan implementar primitivas como configuración dinámica, elección de líder, membresía de grupo, locks y barreras.
+
+02. Problema que resuelve
+El problema de fondo es que una aplicación distribuida necesita coordinar muchos procesos. Por ejemplo, debe saber qué configuración está vigente, qué procesos están vivos, quién es el líder y cómo evitar accesos simultáneos incompatibles. ZooKeeper centraliza estos metadatos de coordinación sin convertirse en una base de datos general de aplicación.
+
+03. Modelo de datos: znodes
+El modelo de datos se basa en znodes, organizados jerárquicamente como rutas de un sistema de archivos. Un znode no está pensado para almacenar archivos grandes, sino metadatos de coordinación. Los nodos efímeros son fundamentales porque representan la vida de una sesión: si el cliente falla, el znode desaparece automáticamente. Los nodos secuenciales permiten ordenar solicitudes, por ejemplo en una cola para locks.
+
+04. API mínima de ZooKeeper
+ZooKeeper expone una API deliberadamente pequeña. Las operaciones principales son crear, borrar, consultar existencia, leer datos, escribir datos, listar hijos y sincronizar. Las actualizaciones aceptan un número de versión esperado, lo cual permite implementar escrituras condicionales. Además, la API asíncrona permite mantener varias operaciones pendientes y mejorar el rendimiento.
+
+05. Garantías de orden y consistencia
+La clave del diseño está en combinar dos garantías. Primero, las escrituras son linealizables: todos los cambios al estado de ZooKeeper se ordenan de forma consistente. Segundo, cada cliente observa sus propias operaciones en orden FIFO. Las lecturas, en cambio, se responden localmente desde la réplica conectada, lo que mejora el rendimiento, aunque una lectura puede estar ligeramente atrasada. Para evitarlo, el cliente puede ejecutar sync y luego leer.
+
+06. Watches: notificaciones de cambio
+Los watches son otro elemento central. Un cliente puede leer un znode y pedir que se le notifique cuando cambie. La notificación no transporta necesariamente el nuevo valor: solo avisa que hubo un cambio. Después, el cliente vuelve a leer y registra otro watch. Con esto, ZooKeeper permite mantener cachés en el cliente sin consultar constantemente al servidor.
+
+07. Arquitectura interna
+Internamente, ZooKeeper se ejecuta como un conjunto de servidores llamado ensemble. Cada servidor mantiene una réplica en memoria del árbol de znodes. Cuando una petición es de lectura, el servidor la responde localmente. Cuando la petición modifica el estado, se envía al líder, que la ordena mediante Zab, un protocolo de broadcast atómico. Para recuperación, ZooKeeper usa log de escritura anticipada y snapshots periódicos.
+
+08. Zab, líder y quórum
+Zab es el mecanismo que permite que las escrituras lleguen a todas las réplicas en el mismo orden. El líder propone cambios y los seguidores los confirman. Con dos f más uno servidores, el sistema tolera f fallos de tipo crash, siempre que exista una mayoría comunicándose. El paper también destaca el uso de transacciones idempotentes, útiles para recuperar réplicas mediante logs y snapshots.
+
+09. Recetas de coordinación
+ZooKeeper no implementa directamente primitivas complejas en el servidor. En su lugar, ofrece recetas para construirlas en el cliente. En membresía, cada proceso crea un znode efímero; si falla, el znode desaparece. En locks, los clientes crean znodes secuenciales y adquieren el lock si tienen el menor número. Para evitar el efecto manada, cada cliente observa solo al znode inmediatamente anterior.
+
+10. Evaluación de rendimiento
+La evaluación muestra que ZooKeeper está optimizado para cargas dominadas por lectura. Como las lecturas se responden localmente, el rendimiento aumenta mucho cuando crece el porcentaje de lecturas. Las escrituras son más caras porque pasan por broadcast atómico y log persistente. Esto genera un trade off: más servidores dan más tolerancia a fallos y más capacidad de lectura, pero también agregan costo al acuerdo de escrituras.
+
+11. Diferencia con Chubby
+Comparado con Chubby, ZooKeeper no se presenta como un servicio de locks. Puede implementar locks, pero estos no forman parte del núcleo del servidor. Además, los clientes pueden conectarse a cualquier réplica, no solo al líder. Esta decisión, junto con lecturas locales y watches, permite mayor rendimiento en aplicaciones donde la mayor parte del tráfico consiste en consultar metadatos.
+
+12. Conclusión
+En conclusión, ZooKeeper propone una solución pragmática para coordinación distribuida. No intenta resolver todo dentro del servidor; más bien ofrece un conjunto pequeño de operaciones con garantías claras. Con znodes, watches, orden FIFO, escrituras linealizables y replicación mediante Zab, permite construir primitivas robustas como elección de líder, membresía, configuración y locks. Su principal fortaleza aparece en cargas dominadas por lectura y metadatos pequeños.

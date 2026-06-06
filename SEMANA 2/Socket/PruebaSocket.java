@@ -1,6 +1,6 @@
 //package pkg03prusoc;
 
-|// Importa la clase InputStream del paquete java.io.
+// Importa la clase InputStream del paquete java.io.
 // InputStream representa un flujo de entrada de bytes.
 // En este programa se usa para leer los datos que llegan desde el servidor.
 import java.io.InputStream;
