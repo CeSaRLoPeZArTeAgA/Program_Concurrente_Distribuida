@@ -1,0 +1,45 @@
+name: prestamos-pc4-mariadb
+services:
+  mariadb:
+    image: mariadb:11.4
+    container_name: mariadb-prestamos
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-rootpass}
+      MARIADB_DATABASE: prestamos_finanzas
+      MARIADB_USER: ${DB_USER:-appuser}
+      MARIADB_PASSWORD: ${DB_PASSWORD:-apppass}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    ports:
+      - "3308:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ../../db/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u$${MARIADB_USER} -p$${MARIADB_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  mariadb-worker:
+    build:
+      context: ../../services/mariadb_worker
+    container_name: nodo-mariadb-java
+    environment:
+      DB_HOST: mariadb
+      DB_NAME: prestamos_finanzas
+      DB_USER: ${DB_USER:-appuser}
+      DB_PASSWORD: ${DB_PASSWORD:-apppass}
+      RABBIT_HOST: ${RABBIT_HOST}
+      RABBIT_PORT: ${RABBIT_PORT:-15672}
+      RABBIT_USER: ${RABBIT_USER:-admin}
+      RABBIT_PASS: ${RABBIT_PASS:-adminpass}
+      HTTP_PORT: 8003
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    ports:
+      - "8003:8003"
+    restart: unless-stopped
+
+volumes:
+  mariadb_data:

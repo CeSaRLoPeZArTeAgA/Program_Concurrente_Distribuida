@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Cliente HTML/JS - Prestamos Distribuidos v8</title>
+<style>
+body{font-family:Arial,sans-serif;margin:24px;background:#f4f6f8;color:#222} .card{background:#fff;border:1px solid #ddd;border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 1px 3px #ccc} label{display:block;margin-top:8px;font-weight:bold} input,textarea{width:100%;padding:8px;margin-top:4px} button{padding:10px 14px;margin-top:12px;cursor:pointer} pre{background:#111;color:#0f0;padding:12px;min-height:160px;white-space:pre-wrap}
+</style>
+</head>
+<body>
+<h1>Cliente HTML/JS - Prestamos Distribuidos v8</h1>
+<div class="card"><label>IP PC1</label><input id="host" value="192.168.0.137"><label>Puerto</label><input id="port" value="8080"><button onclick="health()">Probar conexión</button></div>
+<div class="card"><h2>Solicitud SMS/WhatsApp</h2><label>ID usuario</label><input id="id_usuario" value="1"><label>Contenido</label><textarea id="contenido">Solicito un prestamo de 5500 soles, tengo sueldo estable</textarea><button onclick="sms()">Enviar solicitud</button></div>
+<div class="card"><h2>Correo</h2><label>ID usuario</label><input id="cid_usuario" value="2"><label>Asunto</label><input id="asunto" value="Solicitud de refinanciamiento"><label>Cuerpo</label><textarea id="cuerpo">Quiero refinanciar mi prestamo porque tengo atraso de cuotas</textarea><button onclick="correo()">Enviar correo</button></div>
+<pre id="out"></pre>
+<script>
+function base(){return `http://${document.getElementById('host').value}:${document.getElementById('port').value}`}
+function show(x){document.getElementById('out').textContent=JSON.stringify(x,null,2)}
+async function health(){try{show(await (await fetch(base()+'/api/health')).json())}catch(e){show({error:String(e)})}}
+async function sms(){try{const data={id_usuario:Number(id_usuario.value),canal:'WhatsApp',tipo:'solicitud',contenido:contenido.value};show(await (await fetch(base()+'/api/solicitud',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})).json())}catch(e){show({error:String(e)})}}
+async function correo(){try{const data={id_usuario:Number(cid_usuario.value),asunto:asunto.value,tipo:'refinanciamiento',prioridad:'alta',cuerpo:cuerpo.value};show(await (await fetch(base()+'/api/correo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})).json())}catch(e){show({error:String(e)})}}
+</script>
+</body>
+</html>

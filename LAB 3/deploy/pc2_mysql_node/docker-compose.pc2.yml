@@ -1,0 +1,45 @@
+name: prestamos-pc2-mysql
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: mysql-prestamos
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      MYSQL_DATABASE: prestamos_texto
+      MYSQL_USER: ${DB_USER:-appuser}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-apppass}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ../../db/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u$${MYSQL_USER} -p$${MYSQL_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  mysql-worker:
+    build:
+      context: ../../services/mysql_worker
+    container_name: nodo-mysql-python
+    environment:
+      DB_HOST: mysql
+      DB_NAME: prestamos_texto
+      DB_USER: ${DB_USER:-appuser}
+      DB_PASSWORD: ${DB_PASSWORD:-apppass}
+      RABBIT_HOST: ${RABBIT_HOST}
+      RABBIT_PORT: ${RABBIT_PORT:-15672}
+      RABBIT_USER: ${RABBIT_USER:-admin}
+      RABBIT_PASS: ${RABBIT_PASS:-adminpass}
+      HTTP_PORT: 8001
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8001:8001"
+    restart: unless-stopped
+
+volumes:
+  mysql_data:

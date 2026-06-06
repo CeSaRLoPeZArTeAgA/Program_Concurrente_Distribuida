@@ -1,0 +1,14 @@
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\obj\Debug\net8.0-windows\PrestamosWinFormsClient.GeneratedMSBuildEditorConfig.editorconfig
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\obj\Debug\net8.0-windows\PrestamosWinFormsClient.AssemblyInfoInputs.cache
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\obj\Debug\net8.0-windows\PrestamosWinFormsClient.AssemblyInfo.cs
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\obj\Debug\net8.0-windows\PrestamosWinFormsClient.csproj.CoreCompileInputs.cache
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\bin\Debug\net8.0-windows\PrestamosWinFormsClient.exe
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\bin\Debug\net8.0-windows\PrestamosWinFormsClient.deps.json
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\bin\Debug\net8.0-windows\PrestamosWinFormsClient.runtimeconfig.json
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\bin\Debug\net8.0-windows\PrestamosWinFormsClient.dll
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\bin\Debug\net8.0-windows\PrestamosWinFormsClient.pdb
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\obj\Debug\net8.0-windows\PrestamosWinFormsClient.dll
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\obj\Debug\net8.0-windows\refint\PrestamosWinFormsClient.dll
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\obj\Debug\net8.0-windows\PrestamosWinFormsClient.pdb
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\obj\Debug\net8.0-windows\PrestamosWinFormsClient.genruntimeconfig.cache
+D:\proyecto_prestamos_distribuido\clients\csharp_winforms\obj\Debug\net8.0-windows\ref\PrestamosWinFormsClient.dll
