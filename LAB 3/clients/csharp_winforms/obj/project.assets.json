@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\proyecto_prestamos_distribuido\\clients\\csharp_winforms\\PrestamosWinFormsClient.csproj",
+      "projectUniqueName": "D:\\Program_Concurrente_Distribuida\\LAB 3\\clients\\csharp_winforms\\PrestamosWinFormsClient.csproj",
       "projectName": "PrestamosWinFormsClient",
-      "projectPath": "D:\\proyecto_prestamos_distribuido\\clients\\csharp_winforms\\PrestamosWinFormsClient.csproj",
+      "projectPath": "D:\\Program_Concurrente_Distribuida\\LAB 3\\clients\\csharp_winforms\\PrestamosWinFormsClient.csproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "D:\\proyecto_prestamos_distribuido\\clients\\csharp_winforms\\obj\\",
+      "outputPath": "D:\\Program_Concurrente_Distribuida\\LAB 3\\clients\\csharp_winforms\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aZFalbqGQcw=",
+  "dgSpecHash": "UpR5PStp5bw=",
   "success": true,
-  "projectFilePath": "D:\\proyecto_prestamos_distribuido\\clients\\csharp_winforms\\PrestamosWinFormsClient.csproj",
+  "projectFilePath": "D:\\Program_Concurrente_Distribuida\\LAB 3\\clients\\csharp_winforms\\PrestamosWinFormsClient.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
