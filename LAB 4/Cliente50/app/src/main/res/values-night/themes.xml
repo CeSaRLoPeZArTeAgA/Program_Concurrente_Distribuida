@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.Cliente50" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:fontFamily">sans</item>
+
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <item name="colorPrimary">#0078C8</item>
+        <item name="colorPrimaryDark">#FFFFFF</item>
+        <item name="colorAccent">#0078C8</item>
+    </style>
+
+    <style name="Theme.Cliente50" parent="Base.Theme.Cliente50" />
+</resources>
