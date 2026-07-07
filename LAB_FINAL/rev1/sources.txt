@@ -1,0 +1,10 @@
+src/cc4p1/common/Wire.java
+src/cc4p1/common/Tcp.java
+src/cc4p1/common/Args.java
+src/cc4p1/raft/LogEntry.java
+src/cc4p1/raft/Peer.java
+src/cc4p1/raft/RaftNode.java
+src/cc4p1/detector/DetectionServer.java
+src/cc4p1/client/WatcherClient.java
+src/cc4p1/client/ManualEventClient.java
+src/cc4p1/client/StatusClient.java
