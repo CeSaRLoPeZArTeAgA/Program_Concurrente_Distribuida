@@ -1,25 +1,75 @@
-﻿# Compilados Java
-build/
-*.class
+﻿# Python virtual environments
+.venv/
+venv/
+env/
+**/.venv/
+**/venv/
 
-# Modelos pesados
-*.pt
-*.onnx
-*.ncnn
-*.bin
-*.param
-
-# Videos
-*.mp4
-*.mkv
-*.avi
-*.mov
-
-# Comprimidos
-*.rar
-*.zip
-*.7z
-
-# Archivos temporales
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Build / temporal
+build/
+dist/
+
+# VS Code
+.vscode/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+
+# Entornos virtuales Python
+.venv/
+**/.venv/
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Compilados / salidas
+LAB_FINAL/rev2/build/
+LAB_FINAL/rev2/data/
+LAB_FINAL/rev2/downloaded_images/
+
+
+# Python
+.venv/
+**/.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Java / build
+build/
+**/build/
+
+# C# / .NET
+bin/
+obj/
+**/bin/
+**/obj/
+
+# Datos generados
+data/
+downloaded_images/
+**/data/
+**/downloaded_images/
+
+# Archivos pesados o generados
+*.zip
+*.jpg
+*.jpeg
+*.png
+*.mp4
+*.avi
+*.log
+
+# Logs
+*.log
